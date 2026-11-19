@@ -1,0 +1,21 @@
+// Development only; the delivered app works with any ordinary static server.
+import { createServer } from 'node:http';
+import { createReadStream, statSync } from 'node:fs';
+import { resolve, extname, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = fileURLToPath(new URL('./app/', import.meta.url));
+const port = Number(process.env.PORT ?? 8080);
+const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
+createServer((request, response) => {
+  try {
+    const path = decodeURIComponent(new URL(request.url ?? '/', 'http://localhost').pathname);
+    const file = resolve(root, '.' + (path.endsWith('/') ? path + 'index.html' : path));
+    if (!file.startsWith(resolve(root) + sep)) { response.writeHead(403).end(); return; }
+    const stat = statSync(file);
+    if (!stat.isFile()) throw new Error('Not a file');
+    response.writeHead(200, { 'Content-Type': (types[extname(file)] ?? 'application/octet-stream') + '; charset=utf-8', 'Cache-Control': 'no-store' });
+    if (request.method === 'HEAD') { response.end(); return; }
+    createReadStream(file).pipe(response);
+  } catch { response.writeHead(404).end('Not found'); }
+}).listen(port, '127.0.0.1', () => console.log(`Vice Fieldnotes: http://127.0.0.1:${port}`));
