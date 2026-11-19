@@ -5,7 +5,8 @@ import { resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('./app/', import.meta.url));
-const port = Number(process.env.PORT ?? 8080);
+const requestedPort = Number(process.env.PORT ?? 8080);
+const port = Number.isInteger(requestedPort) && requestedPort > 0 && requestedPort < 65536 ? requestedPort : 8080;
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
 createServer((request, response) => {
   try {

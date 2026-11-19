@@ -6,6 +6,7 @@ export const routeStages = [
   { id: 'route-5', label: '05 / CLOSE THE FILE', title: 'Side stories & final audit', timing: 'Cleanup → platinum', body: 'Finish Andy, Kenton, Billy, Randy and Tyrone; separately verify eight counted stranger strands. Audit partner and miscellaneous trophies. Three methods remain unconfirmed: see the research holds in Missable watch.', link: 1, source: 'strangers' }
 ];
 
+// These are overlapping trophy categories, not the entire 100% checklist.
 export const targetComparison = [
   ['Stunts', '250', '300 / 397', 15],
   ['Challenges', '50', '70 / 80', 32],

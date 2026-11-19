@@ -17,6 +17,7 @@ const icons = {
 const icon = name => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] ?? icons.trophy}</svg>`;
 const escape = value => String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
 const format = number => Number(number).toLocaleString('en-US');
+// Route and selected trophy share a hash, so every fieldnote is directly linkable.
 let data, trophies, save;
 let view = location.hash.slice(1).split('/')[0] || 'tracker';
 let selected = Number(location.hash.split('/')[1]) || 28;

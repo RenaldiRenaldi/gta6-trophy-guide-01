@@ -66,7 +66,7 @@
   .page-heading .eyebrow { margin-bottom:6px; }
   .spoiler-control { display:flex; align-items:center; font-size:11px; gap:8px; white-space:nowrap; cursor:pointer; }
   .spoiler-control input { position:absolute; opacity:0; width:32px; height:18px; }
-  .switch { width:30px; height:17px; background:#aab4a7; border-radius:12px; padding:3px; display:inline-block; }
+  .switch { width:30px; height:17px; background:#aab4a7; border-radius:12px; padding:3px; display:inline-block; pointer-events:none; }
   .switch:after { content:''; display:block; width:11px; height:11px; border-radius:50%; background:white; transition:transform .15s; }
   .spoiler-control input:checked+.switch { background:var(--ink); }
   .spoiler-control input:checked+.switch:after { transform:translateX(13px); }
@@ -139,7 +139,8 @@
   .risk-dot:before { content:'●'; font-size:6px; margin-right:4px; }
   .pin-marker { font-size:16px; padding-left:7px; color:#697846; }
   .unconfirmed { color:#9b643d; }
-  .trophy-row>.medal { width:24px; height:29px; }
+  .trophy-row>.medal { width:24px; height:29px; position:relative; margin-bottom:10px; }
+  .trophy-row>.medal:after { content:attr(title); position:absolute; top:31px; font-size:7px; text-transform:uppercase; letter-spacing:.2px; }
   .trophy-row>.medal svg { width:15px; }
   .list-footer { display:flex; justify-content:space-between; padding:10px 13px; border-top:1px solid var(--line); color:var(--muted); font-size:8px; gap:8px; }
   .list-footer svg { width:12px; height:12px; }
@@ -197,8 +198,8 @@
   .route-intro>div { font-size:10px; color:var(--muted); white-space:nowrap; }
   .route-intro>div>b { font-size:21px; color:var(--ink); margin-right:6px; }
   .roadmap-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:20px; }
-  .route-stages { display:flex; flex-direction:column; gap:9px; }
-  .route-card { background:var(--card); border:1px solid var(--line); border-radius:6px; padding:9px 13px; display:flex; gap:11px; }
+  .route-stages { display:flex; flex-direction:column; gap:7px; }
+  .route-card { background:var(--card); border:1px solid var(--line); border-radius:6px; padding:5px 13px; display:flex; gap:11px; }
   .route-card.done { background:#edf2e4; }
   .route-check { padding-top:2px; }
   .route-card .eyebrow { display:flex; justify-content:space-between; font-size:7px; letter-spacing:.8px; margin-bottom:4px; gap:5px; }
@@ -213,7 +214,7 @@
   .table-intro { padding:11px 15px; font-size:10px; color:var(--muted); }
   table { border-collapse:collapse; width:100%; font-size:11px; }
   thead { background:#edf1e4; text-align:left; }
-  th,td { padding:8px 13px; border-bottom:1px solid #e6e9df; }
+  th,td { padding:6px 13px; border-bottom:1px solid #e6e9df; }
   thead th { text-transform:uppercase; font-size:8px; letter-spacing:.6px; }
   tbody th { text-align:left; font-weight:400; }
   tbody th button { border:none; padding:0; background:transparent; font-size:11px; }

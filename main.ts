@@ -1,4 +1,4 @@
-// Vice Fieldnotes: deterministic offline hand-in, Node standard library only.
+// Vice Fieldnotes: deterministic offline hand-in, Node 22 standard library only.
 import { cpSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';

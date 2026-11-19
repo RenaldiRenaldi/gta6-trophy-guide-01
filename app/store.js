@@ -1,3 +1,4 @@
+// One versioned save: backups include settings, notes and all manual progress.
 export const SAVE_KEY = 'vice-fieldnotes.v1';
 export const emptySave = () => ({ version: 1, earned: [], counts: {}, notes: {}, pinned: [], tasks: [], spoilers: false, demo: false, chapter: 1 });
 let writable = true;
