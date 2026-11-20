@@ -58,7 +58,8 @@ export function exampleSave(trophies) {
   save.pinned = [28, 17];
   save.tasks = ['route-1'];
   for (const trophy of trophies) if (trophy.target && save.earned.includes(trophy.id)) save.counts[trophy.id] = trophy.target;
-  Object.assign(save.counts, { 15: 84, 17: 18, 18: 6, 25: 2, 28: 7, 30: 1, 31: 37, 32: 24, 40: 2, 43: 4, 52: 95000, 54: 3 });
+  // Explicit sample progress, imported through the same validated backup flow as a real save.
+  Object.assign(save.counts, { 15: 84, 17: 0, 18: 6, 25: 2, 28: 7, 30: 1, 31: 37, 32: 24, 40: 2, 43: 4, 52: 95000, 54: 3 });
   save.notes[28] = 'Chapter 1 balcony tutorial recorded. Continue both-character spots after Coffee Break.';
   return save;
 }

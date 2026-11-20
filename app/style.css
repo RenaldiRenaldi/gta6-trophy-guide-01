@@ -1,4 +1,4 @@
-@layer reset, shell, tracker, views, responsive;
+@layer reset, shell, tracker, views, responsive, evidence;
 @layer reset {
   :root { --ink:#193435; --deep:#132b2d; --paper:#f6f5ef; --card:#fffefa; --line:#dcdfd4; --muted:#687773; --lime:#e2ee9c; --coral:#ba4c36; --sage:#eaf0e5; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:var(--paper); font-synthesis:none; }
   * { box-sizing:border-box; }
@@ -284,4 +284,87 @@
   @media(max-width:1100px) { .sidebar { width:155px; padding-left:10px; padding-right:10px; }.workspace { margin-left:155px; width:calc(100% - 155px); }main { padding-left:18px; padding-right:18px; }.topbar { padding:0 18px; }.stats { gap:12px; }.offline-stat { display:none; }.progress-stat { width:43%; }.grade-stat { border-right:none; }.tracker-grid { gap:12px; }.guide-title h2 { font-size:20px; }.kind-tabs button { padding:5px 8px; }.route-links a { max-width:160px; }.top-actions { gap:7px; }.save-status { display:none; } }
   @media(max-width:780px) { .sidebar { position:static; width:100%; padding:12px 16px; }.brand { font-size:15px; }.brand-mark { font-size:28px; }.brand b { font-size:8px; }.edition,.sidebar-bottom { display:none; }nav { flex-direction:row; gap:5px; margin-top:14px; overflow:auto; }.nav-link { font-size:10px; flex-shrink:0; padding:8px; }.nav-link svg { width:14px; }.workspace { width:100%; margin-left:0; }#app { display:block; }.topbar { height:48px; }.breadcrumb { font-size:7px; letter-spacing:.7px; }.breadcrumb>span { margin:0 5px; }.icon-button { font-size:9px; padding:4px 7px; }.demo-label { font-size:7px; }main { padding-top:19px; }h1 { font-size:28px; }.page-heading { align-items:flex-start; }.page-heading .eyebrow { font-size:8px; }.spoiler-control { margin-top:4px; font-size:9px; gap:5px; }.progress-stat { width:45%; }.progress-numeral { font-size:34px; }.progress-stat { gap:10px; }.progress-stat strong { font-size:10px; }.grade-stat { padding:0 0 0 10px; }.grade-stat>div { gap:3px; }.grade-stat .medal { width:21px; height:26px; }.grade-stat .medal svg { width:14px; }.grade-stat b { font-size:13px; }.grade-stat>div>span>span { font-size:7px; }.grade-stat b small { font-size:9px; }.warning { align-items:flex-start; gap:9px; padding:10px; }.warning strong { font-size:11px; }.warning div>span { font-size:9px; }.warning button { font-size:0; }.warning button svg { width:19px; height:19px; }.tracker-grid,.roadmap-grid,.missables-grid,.settings-grid { grid-template-columns:1fr; }.trophy-list { height:345px; }.guide-scroll { max-height:none; }.guide { margin-bottom:8px; }.guide-copy { font-size:14px; }.guide-steps li { font-size:13px; }.risk-note p { font-size:12px; }.source-block a { font-size:11px; }.tag { font-size:9px; }.guide-title h2 { font-size:24px; }.row-title { font-size:15px; }.row-description { font-size:11px; }.row-meta { font-size:9px; }.route-card>div>p:not(.eyebrow) { font-size:12px; }.route-card .eyebrow { font-size:8px; }.route-links a,.route-links button { font-size:9px; }.route-card { padding:15px; }.route-intro { align-items:flex-start; }.route-intro p { font-size:11px; }.route-intro>div { font-size:9px; }.missable-intro { gap:12px; }.missable-intro>.tag { display:none; }.missable-intro h2 { font-size:17px; }.missable-intro p { font-size:10px; }.watchlist p { font-size:12px; }footer { font-size:7px; padding:13px 18px; }footer>span:last-child { display:none; }.filterbar { flex-wrap:wrap; }.search-field { min-width:100%; }.filterbar select { flex:1; }.source-directory { max-height:350px; } }
   @media(prefers-reduced-motion:reduce) { * { transition:none !important; } }
+}
+
+@layer evidence {
+  .audit-strip { margin:0 0 8px; padding:6px 10px; border:1px solid #d9ddcf; border-left:3px solid #687c53; border-radius:4px; background:#eeefe5; color:#344b3e; font-size:12px; line-height:1.45; }
+  .audit-strip b { letter-spacing:.7px; }
+  .tracker-cover { display:flex; align-items:center; gap:9px; margin:0 0 7px; }
+  .next-up { padding:9px 12px; background:#edf1e4; border:1px solid #d8dfc9; border-radius:5px; font-size:11px; line-height:1.4; }
+  .next-up>b,.route-next>b { color:#6b7644; font-size:9px; letter-spacing:.8px; margin-right:7px; }
+  .next-up>span,.next-up>small { display:block; margin-left:58px; }
+  .next-up>small { color:var(--muted); }
+  .next-up.compact { flex:1; padding:6px 9px; }
+  .next-up.compact>span { display:inline; margin:0; }
+  .stage-chips { display:flex; gap:5px; flex-shrink:0; }
+  .stage-chips>span { border:1px solid var(--line); border-radius:4px; padding:5px 7px; color:#637063; font-size:11px; white-space:nowrap; }
+  .stage-chips b { color:var(--ink); }
+  .citation { color:#657347; font-size:.86em; font-weight:700; white-space:nowrap; }
+  .counter { margin:0 19px 8px; padding:7px 0; }
+  .guide-scroll { max-height:410px; }
+  .source-block .source-entry { margin:3px 0 7px; }
+  .source-entry a { font-size:10px; font-weight:700; }
+  .source-entry span { display:block; padding-left:13px; color:#64756b; font-size:9px; line-height:1.45; overflow-wrap:anywhere; }
+  .route-next { margin:0 0 8px; padding:7px 11px; border:1px solid #e1c9ad; border-radius:5px; background:#f8eedc; font-size:10px; }
+  .route-next>span,.route-next>small { display:block; margin-left:68px; }
+  .route-next>small { color:#77654e; margin-top:2px; }
+  .route-card { padding:5px 10px; }
+  .route-card h2 { display:flex; justify-content:space-between; align-items:center; }
+  .route-card h2 small { font-size:10px; font-weight:400; color:var(--muted); white-space:nowrap; }
+  .route-card>div>p:not(.eyebrow) { font-size:9px; line-height:1.5; }
+  .trophy-chips { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
+  .trophy-chip { display:inline-flex; align-items:center; gap:3px; max-width:100%; padding:2px 4px; border:1px solid #e0e4d8; border-radius:3px; background:#f8f8f2; color:#4e6256; font-size:10px; line-height:1.3; }
+  .trophy-chip i { color:#7c8656; font-size:8px; font-style:normal; }
+  .trophy-chip.earned { background:#e5eedf; border-color:#cfdcc4; color:#294d3d; }
+  .trophy-chip.gold { border-bottom:2px solid #c7a64c; }
+  .trophy-chip.silver { border-bottom:2px solid #91a5aa; }
+  .trophy-chip.platinum { border-bottom:2px solid #759b8d; }
+  .route-meta { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+  .route-meta .tag { font-size:7px; }
+  .route-links { margin-top:3px; }
+  .route-hours { color:#596b5e; font-size:10px; }
+  .chapter-watch { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; padding:7px; margin-bottom:9px; border:1px solid var(--line); border-radius:6px; background:#fbfaf5; }
+  .chapter-watch>b { grid-column:1/-1; color:var(--muted); font-size:8px; letter-spacing:.9px; }
+  .chapter-watch>div { padding:5px 7px; border-left:2px solid #a6b38d; background:#f2f3e9; }
+  .chapter-watch>div>span { font-size:9px; font-weight:700; }
+  .chapter-watch p { font-size:11px; line-height:1.4; }
+  .watch-cards>article { border-top:1px solid var(--line); padding:8px 0; }
+  .watch-cards>article>b { font-size:10px; }
+  .watch-cards>article>p { margin-top:3px; }
+  .export-receipt { border:1px solid #d4dfc9; background:#eff3e9; color:#345440; padding:9px 11px; margin:10px 0; font-size:10px; line-height:1.5; overflow-wrap:anywhere; }
+  .export-receipt>span { display:block; }
+  .export-receipt.pending { color:var(--muted); background:#f4f3eb; }
+  .trophy-list { height:455px; }
+  .trophy-row { padding:4px 10px; gap:8px; min-height:52px; }
+  .row-title { font-size:14px; margin-bottom:0; }
+  .row-description { font-size:11px; line-height:1.25; }
+  .row-meta { margin-top:1px; }
+  .source-entry a { overflow-wrap:anywhere; }
+  @media(min-width:781px) {
+    .tracker-cover { flex-wrap:nowrap; }
+    .next-up.compact { min-width:0; }
+    .next-up.compact>span { font-size:10px; }
+    .warning { margin-bottom:8px; padding:8px 12px; }
+    .filterbar { margin-bottom:8px; }
+    .kind-tabs { margin-bottom:8px; }
+    .route-stages { gap:6px; }
+    .route-card>div>p:not(.eyebrow) { font-size:11px; line-height:1.4; }
+    .route-card { padding:5px 10px; }
+    .route-card .eyebrow { margin-bottom:2px; }
+    .route-card h2 { margin-bottom:3px; }
+    .route-intro { margin-bottom:8px; }
+    .route-next { display:grid; grid-template-columns:68px 1fr; }
+    .route-next>b { grid-row:span 2; }
+    .route-next>span,.route-next>small { margin-left:0; }
+    .route-links .source-entry { max-width:75%; }
+    .route-links .source-entry span { font-size:9px; }
+    .route-links a { font-size:10px; }
+    .route-meta .tag { font-size:9px; }
+    .roadmap-grid { grid-template-columns:minmax(0,1fr) 340px; gap:14px; }
+    .route-card>div { min-width:0; flex:1; }
+    .route-links .source-entry span { display:none; }
+    .route-links .source-entry a { font-size:9px; }
+  }
+  @media(max-width:1100px) { .tracker-cover { flex-wrap:wrap; }.stage-chips { order:2; }.audit-strip { font-size:10px; }.guide-scroll { max-height:450px; } }
+  @media(max-width:780px) { .tracker-cover { align-items:stretch; }.next-up.compact { white-space:normal; }.stage-chips { width:100%; justify-content:space-between; }.stage-chips>span { padding:4px; font-size:8px; }.chapter-watch { grid-template-columns:repeat(2,1fr); }.audit-strip { font-size:10px; } }
 }
