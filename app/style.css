@@ -315,6 +315,7 @@
   .trophy-chips { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
   .trophy-chip { display:inline-flex; align-items:center; gap:3px; max-width:100%; padding:2px 4px; border:1px solid #e0e4d8; border-radius:3px; background:#f8f8f2; color:#4e6256; font-size:10px; line-height:1.3; }
   .trophy-chip i { color:#7c8656; font-size:8px; font-style:normal; }
+  .trophy-chip b { min-width:0; overflow-wrap:anywhere; padding-inline-end:1px; }
   .trophy-chip.earned { background:#e5eedf; border-color:#cfdcc4; color:#294d3d; }
   .trophy-chip.gold { border-bottom:2px solid #c7a64c; }
   .trophy-chip.silver { border-bottom:2px solid #91a5aa; }
@@ -341,6 +342,8 @@
   .row-meta { margin-top:1px; }
   .source-entry a { overflow-wrap:anywhere; }
   @media(min-width:781px) {
+    #toast { top:4px; bottom:auto; padding-block:7px; }
+    .complete-button { padding-block:6px; }
     .tracker-cover { flex-wrap:nowrap; }
     .next-up.compact { min-width:0; }
     .next-up.compact>span { font-size:10px; }
@@ -364,6 +367,11 @@
     .route-card>div { min-width:0; flex:1; }
     .route-links .source-entry span { display:none; }
     .route-links .source-entry a { font-size:9px; }
+  }
+  @media(min-width:1101px) and (max-height:900px) {
+    .trophy-list { height:376px; }
+    .trophy-row { min-height:46px; padding-block:1px; }
+    .trophy-row>.medal { margin-bottom:3px; }
   }
   @media(max-width:1100px) { .tracker-cover { flex-wrap:wrap; }.stage-chips { order:2; }.audit-strip { font-size:10px; }.guide-scroll { max-height:450px; } }
   @media(max-width:780px) { .tracker-cover { align-items:stretch; }.next-up.compact { white-space:normal; }.stage-chips { width:100%; justify-content:space-between; }.stage-chips>span { padding:4px; font-size:8px; }.chapter-watch { grid-template-columns:repeat(2,1fr); }.audit-strip { font-size:10px; } }
