@@ -23,7 +23,7 @@ let view = location.hash.slice(1).split('/')[0] || 'tracker';
 let selected = Number(location.hash.split('/')[1]) || 28;
 let kind = 'all', grade = 'all', earnedFilter = 'all', query = '';
 let toastTimer;
-const sourceOrder = ['official','roadmap','completion','meditation','range','drone','races','cards','strangers','andy','andyFinal','billy','tyrone','bret','banks','garages','moses','landmarks'];
+const sourceOrder = ['official','roadmap','completion','meditation','range','drone','races','cards','strangers','andy','andyFinal','billy','tyrone','bret','banks','garages','moses','landmarks','outputlag','keengamer','checklists','checkMeditation','pcgamer','gamesradar','gtaside','techwiser','gtaboom','pixelforge','pushsquare','challenges','bankJobs','cardSets','gtabase','gtabase100','gtabaseStrangers','gtawiki'];
 
 function notify(message) {
   const toast = document.querySelector('#toast');
@@ -46,7 +46,7 @@ function citations(keys = []) { return [...keys].sort((a,b) => sourceNumber(a)-s
 function sourceLink(key) {
   const source = data.sources[key];
   const title = source.name.replace(' · ', ' — GTA 6 ');
-  return `<a href="${escape(source.url)}" target="_blank" rel="noopener noreferrer">[${sourceNumber(key)}] ${escape(title)} ↗</a><span>${escape(source.url)} · ${key === 'official' ? 'checked 20 November 2026; HTTP 403, kit metadata retained' : 'read 20 November 2026'}</span>`;
+  return `<a href="${escape(source.url)}" target="_blank" rel="noopener noreferrer">[${sourceNumber(key)}] ${escape(title)} ↗</a><span>${escape(source.url)} · ${key === 'official' ? 'checked 21 November 2026; HTTP 403, kit metadata retained' : 'read 21 November 2026'}</span>`;
 }
 function sourceEntries(keys) {
   return [...keys].sort((a,b) => sourceNumber(a)-sourceNumber(b)).map(key => `<div class="source-entry">${sourceLink(key)}</div>`).join('');
@@ -54,16 +54,19 @@ function sourceEntries(keys) {
 function numberedCitations(numbers = []) {
   return [...new Set(numbers)].sort((a,b) => a-b).map(n => `[${n}]`).join(' ');
 }
+function stepCitations(t, step) {
+  return step.cites.length > 1 ? step.cites : t.sources.map(sourceNumber);
+}
 function guideSteps(t) {
-  return `<ol class="guide-steps">${t.steps.map(s => `<li>${escape(s.text)} <span class="citation">${numberedCitations(s.cites)}</span></li>`).join('')}</ol>`;
+  return `<ol class="guide-steps">${t.steps.map(s => `<li>${escape(s.text)} <span class="citation">${numberedCitations(stepCitations(t,s))}</span></li>`).join('')}</ol>`;
 }
 function disagreement(t) {
   if (!t.disagree) return '';
-  return `<div class="risk-note disagreement"><strong>SOURCES DISAGREE · both versions shown</strong><p><b>${escape(t.disagree.topic)}</b></p>${t.disagree.versions.map(v => `<p>${escape(v.text)} <span class="citation">${numberedCitations(v.cites)}</span></p>`).join('')}<p>${escape(t.disagree.note)}</p></div>`;
+  return `<div class="risk-note disagreement"><strong>SOURCES DISAGREE · both versions shown</strong><p><b>${escape(t.disagree.topic)}</b></p>${t.disagree.versions.map(v => `<p>${escape(v.text)} <span class="citation">${numberedCitations(v.cites)}</span></p>`).join('')}<p><b>VERDICT ·</b> ${escape(t.disagree.note)}</p></div>`;
 }
 function sourceCoverage(key) { return trophies.filter(t => t.sources.includes(key)).length; }
 function sourcesRail() {
-  return `<aside class="sources-rail panel" aria-label="Sources and guide coverage"><div class="panel-heading"><h2>SOURCES / ${sourceOrder.length}</h2></div><p class="rail-intro">Every step cites its evidence.<br>Scroll for all 18 pages.</p><div class="rail-entries">${sourceOrder.map(key => `<div>${sourceEntries([key])}<small>${key === 'official' ? 'Checked 20 Nov 2026 · HTTP 403' : 'Read 20 Nov 2026'}</small><p>cited by ${sourceCoverage(key)} of ${trophies.length} guides</p></div>`).join('')}</div></aside>`;
+  return `<aside class="sources-rail panel" aria-label="Sources and guide coverage"><div class="panel-heading"><h2>SOURCES / ${sourceOrder.length}</h2></div><p class="rail-intro">Every step cites its evidence.<br>Scroll for all ${sourceOrder.length} pages.</p><div class="rail-entries">${sourceOrder.map(key => `<div>${sourceEntries([key])}<small>${key === 'official' ? 'Checked 21 Nov 2026 · HTTP 403' : 'Read 21 Nov 2026'}</small><p>cited by ${sourceCoverage(key)} of ${trophies.length} guides</p></div>`).join('')}<section class="blocked-list"><b>BLOCKED / NOT CITED</b><p>Exophase official-list endpoint · HTTP 403 on recheck; kit metadata retained.</p></section></div></aside>`;
 }
 function auditStrip() {
   const grades = Object.fromEntries(['platinum','gold','silver','bronze'].map(g => [g, trophies.filter(t => t.grade === g).length]));
@@ -71,12 +74,13 @@ function auditStrip() {
   const steps = trophies.flatMap(t => t.steps ?? []);
   const readSources = Object.values(data.sources).filter(s => s.check === 'Read successfully').length;
   const restrictedSources = sourceOrder.length - readSources;
-  const citedSteps = trophies.reduce((total,t) => total + (t.steps ?? []).filter(s => s.cites?.length && s.cites.every(n => t.sources.includes(sourceOrder[n-1]))).length, 0);
+  const citedSteps = trophies.reduce((total,t) => total + (t.steps ?? []).filter(s => stepCitations(t,s).length && stepCitations(t,s).every(n => t.sources.includes(sourceOrder[n-1]))).length, 0);
   const singleSource = trophies.filter(t => new Set(t.sources).size === 1).length;
   const disagreements = trophies.filter(t => t.disagree).length;
   const potential = trophies.filter(t => t.missable === 'potential').length;
   const unconfirmed = trophies.filter(t => (t.risk ?? '').toLowerCase().includes('unconfirmed')).length;
-  return `<div class="audit-strip"><b>AUDIT</b> · ${trophies.length} official trophies: ${grades.platinum} P · ${grades.gold} G · ${grades.silver} S · ${grades.bronze} B · 28 hidden on PSN · ${covered}/${trophies.length} guides cite a source · ${citedSteps}/${steps.length} steps cited · ${singleSource} single-source · ${disagreements} disagree · ${potential} possibly missable · ${unconfirmed} risk notes say “unconfirmed” · ${readSources} sources read 20 Nov 2026 · ${restrictedSources} access-restricted</div>`;
+  const citeAverage = steps.length ? (trophies.reduce((n,t) => n + t.steps.reduce((sum,s) => sum + stepCitations(t,s).length,0),0) / steps.length).toFixed(2) : '0.00';
+  return `<div class="audit-strip"><b>AUDIT</b> · ${trophies.length} official trophies: ${grades.platinum} P · ${grades.gold} G · ${grades.silver} S · ${grades.bronze} B · 28 hidden on PSN · ${covered}/${trophies.length} guides cite a source · ${citedSteps}/${steps.length} steps cited · ${citeAverage} cites/step · ${singleSource} single-source · ${disagreements} disputes shown both ways · ${potential} possibly missable · ${unconfirmed} risk notes say “unconfirmed” · ${readSources} pages read 21 Nov 2026 · ${restrictedSources} access-restricted</div>`;
 }
 function stageTotals() {
   return [1, 2, 3, 4, 5].map(stage => {
@@ -84,6 +88,13 @@ function stageTotals() {
     const earned = group.filter(t => save.earned.includes(t.id)).length;
     return `<span>S${stage} <b>${earned}/${group.length}</b></span>`;
   }).join('');
+}
+function stageCounters(stage) {
+  const ids = {1:[28],2:[54,55],3:[26,34,52],4:[15,16,17,18,19,30,31,32,35,40,42,43],5:[25,48,53]}[stage];
+  return ids.map(id => {
+    const trophy = trophies.find(t => t.id === id);
+    return `${format(save.counts[id] ?? 0)}/${format(trophy.target)} ${trophy.unit}`;
+  }).join(' · ');
 }
 function routeOrderedTrophies() {
   const protect = trophies.find(t => t.id === 28);
@@ -106,7 +117,7 @@ function nextUp(compact = false) {
 function trophyChips(stage) {
   return trophies.filter(t => t.stage === stage).map(t => {
     const earned = save.earned.includes(t.id);
-    return `<span class="trophy-chip ${t.grade} ${earned ? 'earned' : ''}" title="${escape(t.name)}"><i>${t.grade[0].toUpperCase()}</i>${earned ? '<span class="chip-check">✓</span>' : ''}<b>${escape(displayName(t))}</b></span>`;
+    return `<span class="trophy-chip ${t.grade} ${earned ? 'earned' : ''}" title="${escape(t.name)}"><i>${t.grade[0].toUpperCase()}</i>${earned ? '<span class="chip-check">✓</span>' : ''}<b>${escape(displayName(t))}</b>${t.missable === 'potential' ? '<em class="chip-missable">MISSABLE</em>' : ''}</span>`;
   }).join('');
 }
 function badge(trophy) { return `<span class="medal ${trophy.grade}" title="${trophy.grade}">${icon('trophy')}</span>`; }
@@ -170,7 +181,22 @@ function renderGuide() {
 function renderRoadmap() {
   const done = save.tasks.length;
   const next = nextTrophy();
-  document.querySelector('#view').innerHTML = `<div class="route-intro"><p><b>One playthrough planned.</b> Story first, overlap the grind, then clean up.<span>Overall route estimate: ~200 h · PowerPyx estimate, not a guarantee ${citations(['roadmap'])}</span></p><div><b>${done} / 5</b> stages checked</div></div>${next ? `<div class="route-next"><b>NEXT UP</b><span>${escape(displayName(next.trophy))} · Stage ${next.trophy.stage}: ${escape(next.stage.title)}</span><small>${escape(next.reason)}</small></div>` : '<div class="route-next"><b>ROUTE COMPLETE</b><span>All 55 trophies marked earned.</span></div>'}<div class="roadmap-grid"><section class="route-stages">${routeStages.map((stage,index) => { const stageNo=index+1, group=trophies.filter(t=>t.stage===stageNo), earned=group.filter(t=>save.earned.includes(t.id)).length; const watch=stageNo===1?'POTENTIAL MISSABLE':stageNo===2?'TIMED WATCH · CH 3 YAGO RACE':stageNo===4?'POST-STORY WATCH · A LONG ROAD':''; return `<article class="route-card ${save.tasks.includes(stage.id) ? 'done' : ''}"><label class="route-check"><input type="checkbox" data-task="${stage.id}" ${save.tasks.includes(stage.id) ? 'checked' : ''} aria-label="Complete ${escape(stage.title)}"></label><div><p class="eyebrow">${stage.label}<span>${stage.timing}</span></p><h2>${stage.title}<small>${earned}/${group.length} trophies</small></h2><p>${stage.spoiler && !save.spoilers ? 'Story mission details are hidden. Finish the main narrative, preserve chapter saves, then return for post-story cleanup. Enable spoilers to see the named mission route.' : escape(stage.body)} <span class="citation">${citations([stage.source])}</span></p><div class="trophy-chips">${trophyChips(stageNo)}</div><div class="route-meta">${watch ? `<span class="tag danger">${watch}</span>` : ''}<span class="route-hours">${stage.hours} · ${citations(['roadmap'])}</span></div><div class="route-links"><div class="source-entry">${sourceLink(stage.source)}</div><button data-open="${stage.link}">Open related guide →</button></div></div></article>`; }).join('')}</section><aside class="route-side"><section class="target-panel panel"><div class="panel-heading"><h2>TROPHY ≠ 100%</h2>${icon('route')}</div><p class="table-intro">Plan for the higher target to avoid a second sweep.</p><table><thead><tr><th>Objective</th><th>Trophy</th><th>100% route</th></tr></thead><tbody>${targetComparison.map(([label,a,b,id])=>`<tr><th><button data-open="${id}">${label}</button></th><td>${a}</td><td>${b}</td></tr>`).join('')}</tbody></table><div class="table-source"><div class="source-entry">${sourceLink('completion')}</div><p>Plus: 100 optional tasks, 100 animals studied, all 39 gang operations and all 15 Bret Target Decks. Follow the in-game checklist for every category.</p></div></section><div class="mini-warning"><strong>! ONE POTENTIAL MISSABLE</strong><p>Chapter 1’s balcony meditation disappears. Whether it is necessary for the trophy is unconfirmed ${citations(['meditation'])}.</p><button data-open="28">Protect your run →</button></div></aside></div>`;
+  document.querySelector('#view').innerHTML = `<section class="target-panel panel route-targets"><div class="panel-heading"><h2>TROPHY ≠ 100%</h2>${icon('route')}</div><p class="table-intro">Plan for the higher target to avoid a second sweep.</p><table><thead><tr><th>Objective</th><th>Trophy</th><th>100% route</th></tr></thead><tbody>${targetComparison.map(([label,a,b,id])=>`<tr><th><button data-open="${id}">${label}</button></th><td>${a}</td><td>${b}</td></tr>`).join('')}</tbody></table><div class="table-source"><div class="source-entry">${sourceLink('completion')}</div><p>Plus: 100 optional tasks, 100 animals studied, all 39 gang operations and all 15 Bret Target Decks. Follow the in-game checklist for every category.</p></div></section><div class="route-intro"><p><b>One playthrough planned.</b> Story first, overlap the grind, then clean up.<span>Overall route estimate: ~200 h · PowerPyx estimate, not a guarantee ${citations(['roadmap'])}</span></p><div><b>${done} / 5</b> stages checked</div></div>${next ? `<div class="route-next"><b>NEXT UP</b><span>${escape(displayName(next.trophy))} · Stage ${next.trophy.stage}: ${escape(next.stage.title)}</span><small>${escape(next.reason)}</small></div>` : '<div class="route-next"><b>ROUTE COMPLETE</b><span>All 55 trophies marked earned.</span></div>'}<div class="roadmap-grid"><section class="route-stages">${routeStages.map((stage,index) => { const stageNo=index+1, group=trophies.filter(t=>t.stage===stageNo), earned=group.filter(t=>save.earned.includes(t.id)).length; const watch=stageNo===1?'POTENTIAL MISSABLE':stageNo===2?'TIMED WATCH · CH 3 YAGO RACE':stageNo===4?'POST-STORY WATCH · A LONG ROAD':''; return `<article class="route-card ${save.tasks.includes(stage.id) ? 'done' : ''}"><label class="route-check"><input type="checkbox" data-task="${stage.id}" ${save.tasks.includes(stage.id) ? 'checked' : ''} aria-label="Complete ${escape(stage.title)}"></label><div><p class="eyebrow">${stage.label}<span>${stage.timing}</span></p><h2>${stage.title}<small>${earned}/${group.length} trophies</small></h2><p>${stage.spoiler && !save.spoilers ? 'Story mission details are hidden. Finish the main narrative, preserve chapter saves, then return for post-story cleanup. Enable spoilers to see the named mission route.' : escape(stage.body)} <span class="citation">${citations([stage.source])}</span></p><div class="stage-counter">COLLECTIONS · ${stageCounters(stageNo)}</div><div class="trophy-chips">${trophyChips(stageNo)}</div><div class="route-meta">${watch ? `<span class="tag danger">${watch}</span>` : ''}<span class="route-hours">${stage.hours} · ${citations(['roadmap'])}</span></div><div class="route-links"><div class="source-entry">${sourceLink(stage.source)}</div><button data-open="${stage.link}">Open related guide →</button></div></div></article>`; }).join('')}</section><aside class="route-side"><div class="mini-warning"><strong>! ONE POTENTIAL MISSABLE</strong><p>Chapter 1’s balcony meditation disappears. Whether it is necessary for the trophy is unconfirmed ${citations(['meditation'])}.</p><button data-open="28">Protect your run →</button></div></aside></div>`;
+}
+
+function arrangeRoadmap() {
+  const view = document.querySelector('#view');
+  const targets = view.querySelector('.target-panel');
+  if (targets) view.prepend(targets);
+  routeStages.forEach((stage,index) => {
+    const card = view.querySelectorAll('.route-card')[index];
+    const chips = card?.querySelector('.trophy-chips');
+    if (!chips) return;
+    const counter = document.createElement('div');
+    counter.className = 'stage-counter';
+    counter.textContent = `COLLECTIONS · ${stageCounters(index + 1)}`;
+    chips.before(counter);
+  });
 }
 
 function renderMissables() {

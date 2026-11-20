@@ -127,6 +127,132 @@
       "scope": "WAiNK discovery category and scanning controls.",
       "checked": "2026-11-20",
       "check": "Read successfully"
+    },
+    "outputlag": {
+      "name": "Output Lag · GTA 6 Trophy List and Missables",
+      "url": "https://outputlag.com/guides/gta-6-trophy-list/",
+      "scope": "Trophy totals, Chapter 1 meditation precaution, saves and missable context.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "keengamer": {
+      "name": "KeenGamer · Trophy Guide and Platinum Roadmap",
+      "url": "https://www.keengamer.com/articles/guides/gta-6-trophy-guide-platinum-roadmap-all-55-trophies/",
+      "scope": "Chapter route, missable caution, 100% targets and trophy list.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "checklists": {
+      "name": "Game-Checklists · Achievements and Trophies Checklist",
+      "url": "https://game-checklists.com/gta6/achievements-checklist/",
+      "scope": "Trophy requirements and the Chapter 1 meditation uncertainty.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "checkMeditation": {
+      "name": "Game-Checklists · Meditation Spots Checklist",
+      "url": "https://game-checklists.com/gta6/meditation-spots-checklist/",
+      "scope": "Meditation locations and distinction between trophy and 100% progress.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "pcgamer": {
+      "name": "PC Gamer · GTA 6 Achievement List",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-achievements-list/",
+      "scope": "Published achievement requirements and list context.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "gamesradar": {
+      "name": "GamesRadar+ · Trophy and Achievement List",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-trophy-achievement-list/",
+      "scope": "Trophy count and activity requirements, including challenge totals.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "gtaside": {
+      "name": "GTAside · GTA 6 Trophies and Achievements",
+      "url": "https://gtaside.com/games/gta6/trophies/",
+      "scope": "Trophy list and activity category descriptions.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "techwiser": {
+      "name": "TechWiser · GTA 6 Trophies and Achievements",
+      "url": "https://techwiser.com/gta-6-trophies-achievements/",
+      "scope": "Trophy list and published unlock descriptions.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "gtaboom": {
+      "name": "GTA BOOM · Trophy and Achievement Guide",
+      "url": "https://www.gtaboom.com/every-gta-6-trophy-and-achievement-at-launch-and-how-to-get-them-fc5f/",
+      "scope": "Trophy list, launch context and activity descriptions.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "pixelforge": {
+      "name": "PixelForge Guides · GTA 6 Platinum Guide",
+      "url": "https://www.pixelforgeguides.com/gta-6.html",
+      "scope": "Roadmap and Chapter 1 meditation caution.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "pushsquare": {
+      "name": "Push Square · GTA 6 Trophy Guide and Roadmap",
+      "url": "https://www.pushsquare.com/guides/gta-6-trophy-guide-and-roadmap",
+      "scope": "Trophy guide and partial 100% targets for cards and meditations.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "challenges": {
+      "name": "PowerPyx · All Challenges Guide",
+      "url": "https://www.powerpyx.com/gta-6-all-challenges-guide/",
+      "scope": "80 challenges; 50 for the trophy and 70 for the 100% checklist.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "bankJobs": {
+      "name": "PowerPyx · Bank Jobs and Vault Locations",
+      "url": "https://www.powerpyx.com/gta-6-all-bank-jobs-locations-bank-vaults/",
+      "scope": "22 bank jobs, eight large vaults and the five-vault trophy threshold.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "cardSets": {
+      "name": "PowerPyx · Collectible Card Sets Locations",
+      "url": "https://www.powerpyx.com/gta-6-all-collectible-card-sets-locations/",
+      "scope": "18 sets, three-set trophy and 15-set completion target.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "gtabase": {
+      "name": "GTABase · Trophy Guide and Achievements List",
+      "url": "https://www.gtabase.com/articles/gta-6/gta-6-achievements-trophies-list-ps5-xbox-series",
+      "scope": "Trophy conditions, activity counts and completion targets.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "gtabase100": {
+      "name": "GTABase · 100% Completion Guide and Checklist",
+      "url": "https://www.gtabase.com/articles/gta-6/gta-6-100-completion-guide-interactive-checklist",
+      "scope": "In-game checklist targets and category counts.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "gtabaseStrangers": {
+      "name": "GTABase · Strangers and Freaks Missions",
+      "url": "https://www.gtabase.com/gta-6/strangers-missions/",
+      "scope": "Strand count, mission categories and progress uncertainty.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
+    },
+    "gtawiki": {
+      "name": "GTA Wiki · Achievements and Trophies in GTA VI",
+      "url": "https://grandtheftauto6wiki.com/wiki/achievements-and-trophies-in-gta-vi/",
+      "scope": "Published trophy and achievement list with requirements.",
+      "checked": "2026-11-20",
+      "check": "Read successfully"
     }
   },
   "trophies": [
@@ -565,8 +691,18 @@
       "risk": "PowerPyx reports that all 100% requirements remain available in post-story free roam.",
       "sources": [
         "official",
-        "completion"
-      ]
+        "completion",
+        "gtabase100",
+        "keengamer"
+      ],
+      "disagree": {
+        "topic": "100% checklist rows: 35 including story, or 34 other targets",
+        "versions": [
+          { "text": "The completion guide presents 35 checklist lines when the story requirement is counted.", "cites": [3] },
+          { "text": "A second guide describes 34 targets beyond the story line.", "cites": [34] }
+        ],
+        "note": "We follow the checklist by counting 35 total lines, including the story requirement, and 34 remaining completion targets."
+      }
     },
     {
       "id": 15,
@@ -582,7 +718,8 @@
       "sources": [
         "official",
         "roadmap",
-        "completion"
+        "completion",
+        "outputlag"
       ],
       "steps": [
         {
@@ -603,7 +740,15 @@
             3
           ]
         }
-      ]
+      ],
+      "disagree": {
+        "topic": "Stunt targets: 250 for this trophy, 300 for 100%",
+        "versions": [
+          { "text": "The trophy requirement is 250 stunts.", "cites": [1] },
+          { "text": "The 100% checklist target is 300 stunts.", "cites": [3] }
+        ],
+        "note": "We follow both published thresholds for their separate awards: 250 for this trophy and 300 for A Long Road."
+      }
     },
     {
       "id": 16,
@@ -684,7 +829,8 @@
       "risk": "Free-roam cleanup; no missable condition reported.",
       "sources": [
         "official",
-        "drone"
+        "drone",
+        "completion"
       ],
       "steps": [
         {
@@ -705,7 +851,15 @@
             6
           ]
         }
-      ]
+      ],
+      "disagree": {
+        "topic": "Top Fun targets: 14 locations or 42 individual trials",
+        "versions": [
+          { "text": "The trophy asks for a win at every drone-race location.", "cites": [1] },
+          { "text": "The 100% route tracks all 42 trials at those locations.", "cites": [3] }
+        ],
+        "note": "We follow the trophy wording for the unlock and keep the full 42-trial total as a separate 100% target."
+      }
     },
     {
       "id": 19,
@@ -720,7 +874,8 @@
       "risk": "Free-roam cleanup; no missable condition reported.",
       "sources": [
         "official",
-        "races"
+        "races",
+        "completion"
       ],
       "steps": [
         {
@@ -741,7 +896,15 @@
             7
           ]
         }
-      ]
+      ],
+      "disagree": {
+        "topic": "Unique race targets: 20 wins versus 30 of 40",
+        "versions": [
+          { "text": "The trophy asks for 20 different race wins.", "cites": [1] },
+          { "text": "The 100% checklist asks for any 30 of 40 unique races.", "cites": [3] }
+        ],
+        "note": "We follow the separate targets: 20 unique wins unlock this trophy; 30 are required for 100%."
+      }
     },
     {
       "id": 20,
@@ -1152,7 +1315,9 @@
       "sources": [
         "official",
         "cards",
-        "roadmap"
+        "roadmap",
+        "completion",
+        "cardSets"
       ],
       "steps": [
         {
@@ -1173,7 +1338,15 @@
             8
           ]
         }
-      ]
+      ],
+      "disagree": {
+        "topic": "Card-set targets: three complete sets or 15 of 18",
+        "versions": [
+          { "text": "The trophy asks for three completed card sets.", "cites": [1, 8] },
+          { "text": "The 100% checklist asks for 15 of the 18 sets.", "cites": [3, 32] }
+        ],
+        "note": "We follow both thresholds as separate goals: three sets for this trophy, 15 for 100% completion."
+      }
     },
     {
       "id": 31,
@@ -1226,7 +1399,8 @@
       "sources": [
         "official",
         "roadmap",
-        "completion"
+        "completion",
+        "challenges"
       ],
       "steps": [
         {
@@ -1247,7 +1421,15 @@
             3
           ]
         }
-      ]
+      ],
+      "disagree": {
+        "topic": "Challenge targets: 50 for this trophy, 70 of 80 for 100%",
+        "versions": [
+          { "text": "The trophy requires any 50 completed challenges.", "cites": [1, 30] },
+          { "text": "The 100% checklist requires any 70 of 80 challenges.", "cites": [3, 30] }
+        ],
+        "note": "We follow the distinct thresholds: 50 unlocks this trophy; 70 is the longer completion target."
+      }
     },
     {
       "id": 33,
@@ -1328,7 +1510,8 @@
       "sources": [
         "official",
         "roadmap",
-        "completion"
+        "completion",
+        "gtabase"
       ],
       "steps": [
         {
@@ -1349,7 +1532,15 @@
             3
           ]
         }
-      ]
+      ],
+      "disagree": {
+        "topic": "Vehicle targets: 100 for this trophy, 200 base models for 100%",
+        "versions": [
+          { "text": "The trophy description asks for 100 discovered vehicles.", "cites": [1, 29] },
+          { "text": "The 100% checklist asks for 200 base-model discoveries.", "cites": [3, 33] }
+        ],
+        "note": "We follow both counters separately: 100 discoveries for this trophy and 200 base models for 100%."
+      }
     },
     {
       "id": 36,
@@ -1391,7 +1582,9 @@
       "risk": "Free-roam attempt; no permanent missable condition reported.",
       "sources": [
         "official",
-        "roadmap"
+        "roadmap",
+        "pushsquare",
+        "gtabase"
       ],
       "steps": [
         {
@@ -1412,7 +1605,15 @@
             2
           ]
         }
-      ]
+      ],
+      "disagree": {
+        "topic": "Personal Best hidden status in published guides",
+        "versions": [
+          { "text": "Push Square lists Personal Best without its hidden-trophy marker.", "cites": [29] },
+          { "text": "GTABase includes it in a list of 28 hidden achievements.", "cites": [33] }
+        ],
+        "note": "We show both reports and leave this trophy's hidden flag unset because the kit does not identify it individually."
+      }
     },
     {
       "id": 38,
