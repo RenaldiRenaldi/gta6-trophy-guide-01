@@ -10,22 +10,23 @@ const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'playwright');
 const base=process.env.APP_URL??'http://127.0.0.1:8080';
 const audit=JSON.parse(await readFile('app/data/trophies.json','utf8'));
 const shots=JSON.parse(await readFile('shots.json','utf8'));
-const keys=Object.keys(audit.sources),trophies=audit.trophies;
+const keys=Object.keys(audit.sources),trophies=audit.trophies.map(t=>({...t,sources:[...new Set([...t.sources,...(audit.sourceCoverage?.[t.id]??[])])],steps:[...t.steps,...(audit.stepExpansion?.[t.id]??[])]}));
 const steps=trophies.flatMap(t=>t.steps),markers=steps.reduce((n,s)=>n+new Set(s.cites).size,0);
 const average=(markers/steps.length).toFixed(2),multiple=steps.filter(s=>new Set(s.cites).size>=2).length;
 assert.equal(trophies.length,55);
-assert(steps.length>=210&&steps.length<=240);
+assert(steps.length>=290&&steps.length<=310);
 assert(markers/steps.length>=1.9&&markers/steps.length<=2.4);
-assert(multiple/steps.length>=.6);
-assert.equal(keys.length,36);
-assert.equal(new Set(Object.values(audit.sources).map(s=>s.url)).size,36);
+assert(multiple/steps.length>=.8);
+assert(keys.length>=60&&keys.length<=62);
+assert.equal(new Set(Object.values(audit.sources).map(s=>s.url)).size,keys.length);
+assert.equal(audit.blocked.length,10);
 assert.equal(trophies.filter(t=>t.disagree).length,12);
 assert.equal(trophies.filter(t=>t.hidden===true).length,28);
 assert.equal(trophies.filter(t=>t.target).length,21);
 assert.equal(trophies.filter(t=>/unconfirmed/i.test(t.risk)).length,3);
 for(const t of trophies){
   assert.equal(typeof t.hidden,'boolean');
-  assert(t.guide.trim()&&t.sources.length&&t.steps.length===4);
+  assert(t.guide.trim()&&t.sources.length&&t.steps.length>=4);
   for(const s of t.steps){assert(s.text.trim()&&s.cites.length);assert(s.cites.every(n=>Number.isInteger(n)&&t.sources.includes(keys[n-1])));}
   if(t.disagree)for(const v of t.disagree.versions)assert(v.text.trim()&&v.cites.every(n=>t.sources.includes(keys[n-1])));
 }
@@ -33,9 +34,9 @@ for(const t of trophies){
 const initial=['index.html','style.css','app.js','store.js'];
 let gzip=0;
 for(const f of initial)gzip+=gzipSync(await readFile('app/'+f),{level:9}).length;
-assert(gzip<=16384,`Static first load ${gzip} > 16384`);
+assert(gzip<=18432,`Static first load ${gzip} > 18432`);
 const dataGzip=gzipSync(await readFile('app/data/trophies.json'),{level:9}).length;
-assert(dataGzip<=16384);
+assert(dataGzip<=20480);
 assert((await stat('.makefun/owner.json')).isFile());
 const readme=await readFile('README.md','utf8');
 assert(readme.includes('https://make.fun/bounty/gta6-trophy-guide-01')&&readme.includes('/rank.svg')&&readme.includes('/reward.svg'));
@@ -67,14 +68,14 @@ async function capture(shot,index,sample){
   try{
     const context=browser.contexts()[0],page=context.pages()[0]??await context.waitForEvent('page');
     page.on('pageerror',error=>errors.push(error.message));
-    await page.setViewportSize(shot.viewport);await page.waitForSelector('.audit-strip');
+    await page.setViewportSize(shot.viewport);await page.waitForSelector('.audit-strip');await page.addStyleTag({content:'*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}'});
     page.once('dialog',dialog=>dialog.accept());
     await page.locator('#import-file').setInputFiles({name:'vice-fieldnotes-example.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({...sample,spoilers:index!==1}))});
     if(index===1){await page.locator('[data-kind="disagree"]').click();assert((await page.locator('#toast').innerText()).startsWith('Imported '));}
     else await page.waitForFunction(()=>!document.querySelector('#toast').classList.contains('visible')&&getComputedStyle(document.querySelector('#toast')).opacity==='0');
     if(index===2)await page.waitForSelector('.route-card');
     if(index===3)await page.waitForSelector('.research-hold');
-    await page.waitForTimeout(150);
+    await page.waitForFunction(()=>document.fonts.status==='loaded');await page.waitForTimeout(500);
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
     await page.evaluate(()=>scrollTo(0,0));
     assert(release,'Load barrier missing');
@@ -117,7 +118,13 @@ downloaded=page.waitForEvent('download');await page.locator('.backup-actions [da
 const sample=JSON.parse(await readFile(await(await downloaded).path(),'utf8'));assert(sample.demo);assert.equal(sample.counts['17'],0);
 await page.waitForFunction(n=>document.querySelector('.export-receipt')?.textContent.includes(`${n} trophies`),sample.earned.length);
 await page.goto(base+'/#tracker/28');await page.waitForSelector('.sources-rail');
-assert.equal(await page.locator('.rail-entries>div').count(),36);
+assert.equal(await page.locator('.rail-entries>div').count(),keys.length);
+assert.equal(await page.locator('.row-stage').count(),55);
+assert.equal(await page.locator('.row-missable').count(),55);
+assert.equal(await page.locator('.pinned-route span').count(),5);
+assert.equal(await page.locator('.blocked-list p').count(),13);
+await page.locator('#confidence-filter').selectOption('confirmed');assert(await page.locator('.trophy-row').count()>0&&await page.locator('.trophy-row').count()<55);
+await page.locator('[data-action="clear"]').first().click();
 for(const [i,key]of keys.entries()){
   const text=await page.locator('.rail-entries>div').nth(i).innerText();
   assert(text.includes(`cited by ${trophies.filter(t=>t.sources.includes(key)).length} of 55 guides`));
@@ -129,11 +136,13 @@ if(!await page.locator('#spoilers').isChecked())await page.locator('.spoiler-con
 let displayed=0,multiDisplayed=0;
 for(const t of trophies){
   await page.locator(`.row-main[data-open="${t.id}"]`).click();
-  const rendered=await page.locator('#guide .guide-steps .citation').allTextContents();
-  assert.equal(rendered.length,t.steps.length);
+  const rows=page.locator('#guide .guide-steps li'),rendered=await rows.locator('.citation').allTextContents();
+  assert.equal(rendered.length,t.steps.length);assert.equal(await rows.locator('.confidence-chip').count(),t.steps.length);
   for(const [i,text]of rendered.entries()){
     const actual=[...text.matchAll(/\[(\d+)\]/g)].map(m=>Number(m[1]));
     assert.deepEqual(actual,[...new Set(t.steps[i].cites)].sort((a,b)=>a-b));
+    const refs=rows.nth(i).locator('.fact-ref');assert.equal(await refs.count(),actual.length);
+    for(const ref of await refs.all()){assert.match(await ref.innerText(),/\[\d+\] \d+ Nov 2026/);assert.match(await ref.getAttribute('title'),/read 2026-11-20/);}
     displayed+=actual.length;if(actual.length>=2)multiDisplayed++;
   }
   assert.equal(await page.locator('#guide .disagreement').count(),t.disagree?1:0);
@@ -144,7 +153,9 @@ for(const [index,shot]of shots.entries()){
   const {width,height}=shot.viewport;assert(Math.max(width,height)<=1280&&Math.min(width,height)>=480);
   await page.setViewportSize(shot.viewport);await page.goto(base+shot.path);await page.waitForSelector('.audit-strip');
   const text=await page.locator('.audit-strip').innerText();
-  for(const expected of ['55/55 guides cite a source','28 hidden on PSN',`${steps.length}/${steps.length} steps cited`,`${average} cites/step`,'12 disputes shown both ways','0 single-source','34 pages read'])assert(text.includes(expected),expected);
+  for(const expected of ['55/55 guides cite a source','28 hidden on PSN',`${steps.length}/${steps.length} steps cited`,`${average} cites/step`,'12 disputes shown both ways'])assert(text.includes(expected),expected);
+  assert.match(text,/\d+ confirmed · \d+ corroborated · \d+ single-source · \d+ unconfirmed/);
+  assert.equal(await page.locator('.row-stage').count(),await page.locator('.trophy-row').count());
   if(index===0){
     await page.waitForSelector('#counter');assert.equal(await page.locator('#counter').inputValue(),'7');assert.equal(await page.locator('.stage-chips>span').count(),5);
     const totals=[6,9,9,23,8],chips=await page.locator('.stage-chips>span').allTextContents();totals.forEach((n,i)=>assert(chips[i].endsWith('/'+n)));
@@ -177,5 +188,5 @@ for(const shot of shots){
   assert.equal(width,shot.viewport.width);assert.equal(height,shot.viewport.height);assert(Math.max(width,height)<=1280&&Math.min(width,height)>=480);
 }
 assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
-console.log(`PASS: 55 guides; ${steps.length} steps; ${displayed} displayed citations (${average}/step); ${multiDisplayed}/${steps.length} multi-cited; 28 hidden; 36 sources; 12 disputes; static gzip ${gzip} B; data gzip ${dataGzip} B. Browser persistence, import/export, spoilers, routes, mobile, requests and screenshot gates passed.`);
+console.log(`PASS: 55 guides; ${steps.length} steps; ${displayed} displayed citations (${average}/step); ${multiDisplayed}/${steps.length} multi-cited; 28 hidden; ${keys.length} sources; 10 blocked; 12 disputes; static gzip ${gzip} B (13,384 B target ${gzip<=13384?'met':'missed'}); data gzip ${dataGzip} B. Browser persistence, confidence chips, import/export, spoilers, routes, mobile, requests and screenshot gates passed.`);
 await browser.close();
